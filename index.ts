@@ -1,10 +1,18 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import express from "express"
 import { calculateBMI } from "./bmiCalculator"
+import { analyseExercises } from "./exerciseCalculator"
+
 const app = express()
 
-app.get("/hello", (_req, res) => {
-  res.send("Hello Full Stack!")
-})
+// parse application/x-www-form-urlencoded
+app.use(express.urlencoded())
+app.use(express.json())
+
+// app.get("/hello", (_req, res) => {
+//   res.send("Hello Full Stack!")
+// })
 
 app.get("/bmi", (req, res) => {
   const height = Number(req.query.height)
@@ -21,6 +29,17 @@ app.get("/bmi", (req, res) => {
     height: height,
     bmi: result,
   })
+})
+
+app.post("/exercises", (req, res) => {
+  const target = req.body.target
+  const exercises = req.body.exercises
+
+  if (!target || !exercises) {
+    res.status(400).json("parameters missing")
+  }
+
+  res.json(analyseExercises(exercises, target))
 })
 
 const PORT = 3003

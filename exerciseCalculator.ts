@@ -35,7 +35,7 @@ const parseExerciseArguments = (args: Array<string>): ExerciseInputs => {
   }
 }
 
-const analyseExercises = (
+export const analyseExercises = (
   exercises: Array<string>,
   target: number
 ): Analysis => {
@@ -45,7 +45,7 @@ const analyseExercises = (
     exercises.reduce((acc, next) => acc + parseFloat(next), 0) / periodLength
   const rating = (average / target) * 100
   const success = rating > 100 ? true : false
-  let ratingDescription
+  let ratingDescription = ""
   if (rating >= 100) {
     ratingDescription = "Keep Up the Good Work!"
   } else if (rating < 100 && rating >= 75) {
@@ -75,5 +75,6 @@ try {
   const { target, exercises } = parseExerciseArguments(process.argv)
   analyseExercises(exercises, target)
 } catch (e) {
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
   console.log("Error, something bad happened, message: ", e.message)
 }

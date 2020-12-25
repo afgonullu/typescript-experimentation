@@ -22,8 +22,8 @@ export const calculateBMI = (
   b: number,
   printText: string
 ): string => {
-  const heightInM: number = Number((b / 100).toFixed(2))
-  const result: number = Number((a / (heightInM * heightInM)).toFixed(2))
+  const heightInM = Number((b / 100).toFixed(2))
+  const result = Number((a / (heightInM * heightInM)).toFixed(2))
   let comment = ""
   if (result < 18.5) {
     comment = "UnderWeight"
@@ -46,5 +46,6 @@ try {
     `Calculating BMI for a person with ${massInKg} kg weight and ${heightInCM} cm height, the result is:`
   )
 } catch (e) {
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
   console.log("Error, something bad happened, message: ", e.message)
 }
